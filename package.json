@@ -1,0 +1,47 @@
+{
+    "name": "employeeslist",
+    "version": "1.0.0",
+    "description": "SPA, React-Redux, employees list and edit.",
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack-dev-server --config ./webpack.config.js --mode development"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rumsterrt/employeesList.git"
+    },
+    "author": "Anatoly Ryumkin <rumsterrt@gmail.com>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/rumsterrt/employeesList/issues"
+    },
+    "homepage": "https://github.com/rumsterrt/employeesList#readme",
+    "devDependencies": {
+        "@babel/core": "^7.8.4",
+        "@babel/plugin-transform-runtime": "^7.8.3",
+        "@babel/preset-env": "^7.8.4",
+        "@babel/preset-react": "^7.8.3",
+        "@babel/preset-stage-1": "^7.8.3",
+        "babel-eslint": "^10.0.3",
+        "babel-loader": "^8.0.6",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "css-loader": "^3.4.2",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.10.0",
+        "eslint-config-react-app": "^5.2.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "html-webpack-plugin": "^3.2.0",
+        "prettier": "^1.19.1",
+        "style-loader": "^1.1.3",
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.10",
+        "webpack-dev-server": "^3.10.2"
+    },
+    "dependencies": {
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "react-redux": "^7.1.3",
+        "react-router-dom": "^5.1.2",
+        "redux": "^4.0.5"
+    }
+}
