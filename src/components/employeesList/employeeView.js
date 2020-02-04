@@ -41,6 +41,14 @@ const EmployeeView = ({ employeeId }) => {
                     <Typography variant="body2" color="textSecondary" component="p">
                         {data.phone}
                     </Typography>
+
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {data.birthdayFormat}
+                    </Typography>
+
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {data.isArchive ? '+' : '-'}
+                    </Typography>
                 </CardContent>
             </Card>
         </ListItem>

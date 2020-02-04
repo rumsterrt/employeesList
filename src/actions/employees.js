@@ -13,12 +13,23 @@ export const actionTypes = {
     EDIT_EMPLOYEE: `${NS}/EDIT_EMPLOYEE`,
 
     REMOVE_EMPLOYEE: `${NS}/REMOVE_EMPLOYEE`,
+
+    UPDATE_FILTER_OR_SORT: `${NS}/UPDATE_FILTER_OR_SORT`,
 }
 
 export const getEmployees = ({ filter } = {}) => dispatch => {
     let items = JSON.parse(localStorage.getItem('employees_list'))
 
-    dispatch({ type: actionTypes.GET_EMPLOYEES_SUCCESS, payload: { filter, nodes: items || initEmployeesList } })
+    if (!items) {
+        //update date to unix
+        items = initEmployeesList.map(item => {
+            const date = item.birthday.split('.')
+            const unixDate = Date.parse(`${date[1]}.${date[0]}.${date[2]}`)
+            return { ...item, birthday: unixDate, birthdayFormat: item.birthday }
+        })
+    }
+
+    dispatch({ type: actionTypes.GET_EMPLOYEES_SUCCESS, payload: { filter, nodes: items } })
 }
 
 export const addEmployee = ({ name, isArchive, role, phone, birthday }) => dispatch => {
@@ -44,4 +55,8 @@ export const removeEmployee = ({ id }) => dispatch => {
         items.filter(item => item.id === id),
     )
     dispatch({ type: actionTypes.EDIT_EMPLOYEE, payload: { id } })
+}
+
+export const updateFilterOrSort = ({ filter, sort = 'none' } = {}) => dispatch => {
+    dispatch({ type: actionTypes.UPDATE_FILTER_OR_SORT, payload: { filter, sort } })
 }
