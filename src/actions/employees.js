@@ -4,9 +4,7 @@ import initEmployeesList from '../data/employees.json'
 const NS = '@app/employees'
 
 export const actionTypes = {
-    GET_EMPLOYEES_REQUEST: `${NS}/GET_EMPLOYEES_REQUEST`,
-    GET_EMPLOYEES_SUCCESS: `${NS}/GET_EMPLOYEES_SUCCESS`,
-    GET_EMPLOYEES_FAILURE: `${NS}/GET_EMPLOYEES_FAILURE`,
+    GET_EMPLOYEES: `${NS}/GET_EMPLOYEES`,
 
     ADD_EMPLOYEE: `${NS}/ADD_EMPLOYEE`,
 
@@ -17,7 +15,7 @@ export const actionTypes = {
     UPDATE_FILTER_OR_SORT: `${NS}/UPDATE_FILTER_OR_SORT`,
 }
 
-export const getEmployees = ({ filter } = {}) => dispatch => {
+export const getEmployees = () => dispatch => {
     let items = JSON.parse(localStorage.getItem('employees_list'))
 
     if (!items) {
@@ -25,35 +23,33 @@ export const getEmployees = ({ filter } = {}) => dispatch => {
         items = initEmployeesList.map(item => {
             const date = item.birthday.split('.')
             const unixDate = Date.parse(`${date[1]}.${date[0]}.${date[2]}`)
-            return { ...item, birthday: unixDate, birthdayFormat: item.birthday }
+            return { ...item, birthday: unixDate }
         })
+        localStorage.setItem('employees_list', JSON.stringify(items))
     }
 
-    dispatch({ type: actionTypes.GET_EMPLOYEES_SUCCESS, payload: { filter, nodes: items } })
+    dispatch({ type: actionTypes.GET_EMPLOYEES, payload: { nodes: items } })
 }
 
 export const addEmployee = ({ name, isArchive, role, phone, birthday }) => dispatch => {
     const items = JSON.parse(localStorage.getItem('employees_list') || '[]')
     const id = uuid()
-    items.push({ id, name, isArchive, role, phone, birthday })
-    localStorage.setItem('employees_list', items)
+    items.unshift({ id, name, isArchive, role, phone, birthday })
+    localStorage.setItem('employees_list', JSON.stringify(items))
     dispatch({ type: actionTypes.ADD_EMPLOYEE, payload: { id, name, isArchive, role, phone, birthday } })
 }
 
-export const editEmployee = ({ id, name, isArchive, role, phone, birthday }) => {
+export const editEmployee = ({ id, name, isArchive, role, phone, birthday }) => dispatch => {
     const items = JSON.parse(localStorage.getItem('employees_list') || '[]')
-    const index = items.findIndex(item => item.id === id)
+    const index = items.findIndex(item => item.id == id)
     items[index] = Object.assign({}, items[index], { name, isArchive, role, phone, birthday })
-    localStorage.setItem('employees_list', items)
+    localStorage.setItem('employees_list', JSON.stringify(items))
     dispatch({ type: actionTypes.EDIT_EMPLOYEE, payload: { id, name, isArchive, role, phone, birthday } })
 }
 
 export const removeEmployee = ({ id }) => dispatch => {
     const items = JSON.parse(localStorage.getItem('employees_list') || '[]')
-    localStorage.setItem(
-        'employees_list',
-        items.filter(item => item.id === id),
-    )
+    localStorage.setItem('employees_list', JSON.stringify(items.filter(item => item.id === id)))
     dispatch({ type: actionTypes.EDIT_EMPLOYEE, payload: { id } })
 }
 

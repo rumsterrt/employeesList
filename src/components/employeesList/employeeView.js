@@ -1,6 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import _get from 'lodash/get'
+import moment from 'moment'
+
 import ListItem from '@material-ui/core/ListItem'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -43,7 +45,7 @@ const EmployeeView = ({ employeeId }) => {
                     </Typography>
 
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {data.birthdayFormat}
+                        {moment(data.birthday).format('DD-MM-YYYY')}
                     </Typography>
 
                     <Typography variant="body2" color="textSecondary" component="p">

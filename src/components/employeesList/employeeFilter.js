@@ -1,6 +1,7 @@
 import React from 'react'
 import { updateFilterOrSort } from 'actions/employees'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -12,6 +13,8 @@ import Checkbox from '@material-ui/core/Checkbox'
 import FormControl from '@material-ui/core/FormControl'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
+import AddIcon from '@material-ui/icons/Add'
+import Fab from '@material-ui/core/Fab'
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -44,12 +47,20 @@ const useStyles = makeStyles(theme => ({
             width: '100%',
         },
     },
+    fabButton: {
+        position: 'absolute',
+        zIndex: 1,
+        bottom: -30,
+        left: 0,
+        right: 0,
+        margin: '0 auto',
+    },
 }))
 
 const EmployeeFilter = () => {
     const classes = useStyles()
-
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const [sort, setSort] = React.useState('none')
     const [role, setRole] = React.useState('all')
@@ -62,6 +73,14 @@ const EmployeeFilter = () => {
     return (
         <AppBar position="sticky" className={classes.appBar}>
             <Toolbar>
+                <Fab
+                    color="secondary"
+                    aria-label="add"
+                    className={classes.fabButton}
+                    onClick={() => history.push('/add')}
+                >
+                    <AddIcon />
+                </Fab>
                 <Box display="flex" width="100%" justifyContent="space-between" className={classes.box}>
                     <FormControl className={classes.formControl}>
                         <InputLabel id="sort-select">Sort by</InputLabel>
