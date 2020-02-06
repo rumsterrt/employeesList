@@ -1,5 +1,8 @@
 import React from 'react'
 import { removeEmployee } from 'actions/employees'
+import { showModal } from 'actions/modals'
+import { useDispatch } from 'react-redux'
+import { modalTypes } from 'components/modals'
 
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -22,9 +25,17 @@ const Header = ({ employeeId, history, dispatch }) => {
                 aria-label="back"
                 disabled={!employeeId}
                 onClick={() => {
-                    console.log('asda')
-                    dispatch(removeEmployee({ id: employeeId }))
-                    history.goBack()
+                    dispatch(
+                        showModal({
+                            type: modalTypes.CONFIRMATION,
+                            props: {
+                                onOk: () => {
+                                    dispatch(removeEmployee({ id: employeeId }))
+                                    history.goBack()
+                                },
+                            },
+                        }),
+                    )
                 }}
             >
                 {employeeId && <DeleteIcon />}

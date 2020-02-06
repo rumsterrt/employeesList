@@ -26,10 +26,15 @@ const useStyles = makeStyles(theme => ({
 const EditEmployee = ({ employeeId }) => {
     const classes = useStyles()
 
-    const employee = useSelector(state => (employeeId ? _get(state, `employees.items.${employeeId}`, {}) : {}))
-
     const dispatch = useDispatch()
     const history = useHistory()
+
+    const employee = useSelector(state => (employeeId ? _get(state, `employees.items.${employeeId}`) : {}))
+
+    if (!employee) {
+        history.push('/')
+        return null
+    }
 
     const handleSubmit = values => {
         dispatch(employeeId ? editEmployee({ ...values, id: employeeId }) : addEmployee(values))
