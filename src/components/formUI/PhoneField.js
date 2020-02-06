@@ -14,7 +14,6 @@ const TextMaskCustom = ({ inputRef, ...other }) => (
         }}
         mask={['+', '7', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
         placeholderChar={'\u2000'}
-        showMask
     />
 )
 
