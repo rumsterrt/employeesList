@@ -4,18 +4,19 @@ import { useSelector, useDispatch } from 'react-redux'
 import _get from 'lodash/get'
 import { addEmployee, editEmployee } from 'actions/employees'
 import { useHistory } from 'react-router-dom'
+import { Page } from 'components/ui'
+import Header from './header'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(theme => ({
     paper: {
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(2),
         marginBottom: theme.spacing(3),
         padding: theme.spacing(2),
         [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-            marginTop: theme.spacing(6),
+            marginTop: theme.spacing(2),
             marginBottom: theme.spacing(6),
             padding: theme.spacing(3),
         },
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 const EditEmployee = ({ employeeId }) => {
     const classes = useStyles()
 
-    const employee = useSelector(state => (employeeId ? _get(state, `employees.items.${employeeId}`) : {}))
+    const employee = useSelector(state => (employeeId ? _get(state, `employees.items.${employeeId}`, {}) : {}))
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -36,12 +37,11 @@ const EditEmployee = ({ employeeId }) => {
     }
 
     return (
-        <Paper className={classes.paper}>
-            <Typography component="h1" variant="h4" align="center">
-                {employeeId ? 'Edit employee' : 'Create new employee'}
-            </Typography>
-            <Form employee={employee} onSubmit={handleSubmit} />
-        </Paper>
+        <Page header={<Header employeeId={employeeId} history={history} dispatch={dispatch} />}>
+            <Paper className={classes.paper}>
+                <Form employee={employee} onSubmit={handleSubmit} />
+            </Paper>
+        </Page>
     )
 }
 

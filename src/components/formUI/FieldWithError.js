@@ -2,14 +2,17 @@ import React from 'react'
 import _ from 'lodash'
 import { Field } from 'formik'
 
-export default ({ style, name, render, hint, className }) => (
+import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
+
+export default ({ style, name, render, className }) => (
     <Field
         name={name}
         render={({ field, form }) => {
             const hasError = _.get(form.touched, name) && _.get(form.errors, name)
 
             return (
-                <div style={style} className={className}>
+                <Box style={style} className={className}>
                     {render({
                         field: {
                             ...field,
@@ -17,8 +20,12 @@ export default ({ style, name, render, hint, className }) => (
                         },
                         form,
                     })}
-                    {hasError && <div>{_.get(form.errors, name)}</div>}
-                </div>
+                    {hasError && (
+                        <Typography color="error" variant="caption">
+                            {_.get(form.errors, name)}
+                        </Typography>
+                    )}
+                </Box>
             )
         }}
     />

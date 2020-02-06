@@ -2,7 +2,6 @@ import React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { TextField, CheckboxField, SelectField, DatePickerField, PhoneField } from 'components/formUI'
-import moment from 'moment'
 
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -43,10 +42,11 @@ const EditForm = ({ employee = {}, onSubmit }) => {
             <Form>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <TextField id="name" name="name" label="Name" fullWidth />
+                        <TextField id="name" name="name" label="Name" fullWidth required />
                     </Grid>
                     <Grid item xs={12}>
                         <SelectField
+                            required
                             fullWidth
                             name="role"
                             label="Role"
@@ -58,10 +58,10 @@ const EditForm = ({ employee = {}, onSubmit }) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <PhoneField id="phone" name="phone" label="Phone" fullWidth />
+                        <PhoneField id="phone" name="phone" label="Phone" fullWidth required />
                     </Grid>
                     <Grid item xs={12}>
-                        <DatePickerField id="birthday" name="birthday" label="Birthday" fullWidth />
+                        <DatePickerField id="birthday" name="birthday" label="Birthday" fullWidth required />
                     </Grid>
 
                     <Grid item xs={12}>

@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import TextField from '@material-ui/core/TextField'
 
-export default ({ style, name, hint, label, ...props }) => (
+export default ({ style, name, hint, ...props }) => (
     <FieldWithError
         style={style}
         name={name}
@@ -21,6 +21,9 @@ export default ({ style, name, hint, label, ...props }) => (
                         form.setFieldValue(name, moment(e.target.value).valueOf(), false)
                     }}
                     error={!field || !!field.error}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
             )
         }}

@@ -11,8 +11,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControl from '@material-ui/core/FormControl'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
+
 import AddIcon from '@material-ui/icons/Add'
 import Fab from '@material-ui/core/Fab'
 
@@ -35,13 +34,11 @@ const useStyles = makeStyles(theme => ({
             width: '100%',
         },
     },
-    appBar: {
-        backgroundColor: 'white',
-    },
     formControlLabel: {
         color: 'black',
     },
     box: {
+        marginBottom: '20px',
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
             width: '100%',
@@ -71,61 +68,49 @@ const EmployeeFilter = () => {
     }, [role, sort, isArchive])
 
     return (
-        <AppBar position="sticky" className={classes.appBar}>
-            <Toolbar>
-                <Fab
-                    color="secondary"
-                    aria-label="add"
-                    className={classes.fabButton}
-                    onClick={() => history.push('/add')}
-                >
-                    <AddIcon />
-                </Fab>
-                <Box display="flex" width="100%" justifyContent="space-between" className={classes.box}>
+        <>
+            <Fab color="secondary" aria-label="add" className={classes.fabButton} onClick={() => history.push('/add')}>
+                <AddIcon />
+            </Fab>
+            <Box display="flex" width="100%" justifyContent="space-between" className={classes.box}>
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="sort-select">Sort by</InputLabel>
+                    <Select id="sort-select" labelId="sort-select" value={sort} onChange={e => setSort(e.target.value)}>
+                        <MenuItem value={'none'}>None</MenuItem>
+                        <MenuItem value={'name'}>Name</MenuItem>
+                        <MenuItem value={'birthday'}>Birthday</MenuItem>
+                    </Select>
+                </FormControl>
+                <Box display="flex" alignItems="center" className={classes.box}>
                     <FormControl className={classes.formControl}>
-                        <InputLabel id="sort-select">Sort by</InputLabel>
+                        <InputLabel id="role-select">Role</InputLabel>
                         <Select
-                            id="sort-select"
-                            labelId="sort-select"
-                            value={sort}
-                            onChange={e => setSort(e.target.value)}
+                            id="role-select"
+                            labelId="role-select"
+                            value={role}
+                            onChange={e => setRole(e.target.value)}
                         >
-                            <MenuItem value={'none'}>None</MenuItem>
-                            <MenuItem value={'name'}>Name</MenuItem>
-                            <MenuItem value={'birthday'}>Birthday</MenuItem>
+                            <MenuItem value={'all'}>All</MenuItem>
+                            <MenuItem value={'driver'}>Driver</MenuItem>
+                            <MenuItem value={'waiter'}>Waiter</MenuItem>
+                            <MenuItem value={'cook'}>Cook</MenuItem>
                         </Select>
                     </FormControl>
-                    <Box display="flex" alignItems="center" className={classes.box}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel id="role-select">Role</InputLabel>
-                            <Select
-                                id="role-select"
-                                labelId="role-select"
-                                value={role}
-                                onChange={e => setRole(e.target.value)}
-                            >
-                                <MenuItem value={'all'}>All</MenuItem>
-                                <MenuItem value={'driver'}>Driver</MenuItem>
-                                <MenuItem value={'waiter'}>Waiter</MenuItem>
-                                <MenuItem value={'cook'}>Cook</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={isArchive || false}
-                                    onChange={() => setIsArchive(prevValue => !prevValue)}
-                                    value="isArchive"
-                                    color="primary"
-                                />
-                            }
-                            label="Is Archive"
-                            className={classes.formControlLabel}
-                        />
-                    </Box>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={isArchive || false}
+                                onChange={() => setIsArchive(prevValue => !prevValue)}
+                                value="isArchive"
+                                color="primary"
+                            />
+                        }
+                        label="Is Archive"
+                        className={classes.formControlLabel}
+                    />
                 </Box>
-            </Toolbar>
-        </AppBar>
+            </Box>
+        </>
     )
 }
 
