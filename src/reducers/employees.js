@@ -1,5 +1,6 @@
 import { actionTypes } from 'actions/employees'
 import _sortBy from 'lodash/sortBy'
+import _omit from 'lodash/omit'
 
 const getInitState = () => {
     return {
@@ -12,7 +13,6 @@ const getInitState = () => {
             },
             sort: 'none',
         },
-        isLoadedLocalData: false,
     }
 }
 
@@ -21,7 +21,7 @@ export default (state = getInitState(), action) => {
 
     switch (action.type) {
         case actionTypes.GET_EMPLOYEES:
-            if (state.isLoadedLocalData) {
+            if (Object.keys(state.items).length > 0) {
                 return state
             }
 
@@ -32,7 +32,6 @@ export default (state = getInitState(), action) => {
                     ...state.nodes,
                     items: payload.nodes.reduce((acc, node) => [...acc, node.id], []),
                 },
-                isLoadedLocalData: true,
             }
         case actionTypes.ADD_EMPLOYEE:
             return {
@@ -48,13 +47,10 @@ export default (state = getInitState(), action) => {
         case actionTypes.REMOVE_EMPLOYEE:
             return {
                 ...state,
-                items: {
-                    ...items,
-                    [payload.id]: null,
-                },
+                items: _omit(state.items, [payload.id]),
                 nodes: {
                     ...state.nodes,
-                    items: state.nodes.items.filter(item => item === payload.id),
+                    items: state.nodes.items.filter(item => item !== payload.id),
                 },
             }
         case actionTypes.UPDATE_FILTER_OR_SORT:
@@ -80,6 +76,8 @@ export default (state = getInitState(), action) => {
                 nodes: {
                     ...state.nodes,
                     items: filtered,
+                    filter: payload.filter,
+                    sort: payload.sort,
                 },
             }
         default:
