@@ -4,7 +4,10 @@
     "description": "SPA, React-Redux, employees list and edit.",
     "main": "index.js",
     "scripts": {
-        "start": "webpack-dev-server --config ./webpack.config.js --mode development"
+        "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+        "build": "webpack --mode production",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
     },
     "repository": {
         "type": "git",
@@ -15,7 +18,7 @@
     "bugs": {
         "url": "https://github.com/rumsterrt/employeesList/issues"
     },
-    "homepage": "https://github.com/rumsterrt/employeesList#readme",
+    "homepage": "https://rumsterrt.github.io/employeesList",
     "devDependencies": {
         "@babel/core": "^7.8.4",
         "@babel/plugin-transform-runtime": "^7.8.3",
@@ -30,6 +33,7 @@
         "eslint-config-prettier": "^6.10.0",
         "eslint-config-react-app": "^5.2.0",
         "eslint-plugin-prettier": "^3.1.2",
+        "gh-pages": "^2.2.0",
         "html-webpack-plugin": "^3.2.0",
         "prettier": "^1.19.1",
         "style-loader": "^1.1.3",
