@@ -42,7 +42,7 @@ const EditForm = ({ employee = {}, onSubmit }) => {
             <Form>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <TextField id="name" name="name" label="Name" fullWidth required />
+                        <TextField id="name" name="name" label="Name" type="text" fullWidth required />
                     </Grid>
                     <Grid item xs={12}>
                         <SelectField

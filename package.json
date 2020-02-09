@@ -2,7 +2,6 @@
     "name": "employeeslist",
     "version": "1.0.0",
     "description": "SPA, React-Redux, employees list and edit.",
-    "main": "index.js",
     "scripts": {
         "start": "webpack-dev-server --config ./webpack.config.js --mode development",
         "build": "webpack --mode production",

@@ -3,7 +3,7 @@ import Form from './form'
 import { useSelector, useDispatch } from 'react-redux'
 import _get from 'lodash/get'
 import { addEmployee, editEmployee } from 'actions/employees'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
 import { Page } from 'components/ui'
 import Header from './header'
 
@@ -32,8 +32,7 @@ const EditEmployee = ({ employeeId }) => {
     const employee = useSelector(state => (employeeId ? _get(state, `employees.items.${employeeId}`) : {}))
 
     if (!employee) {
-        history.push('/')
-        return null
+        return <Redirect to="/" />
     }
 
     const handleSubmit = values => {
