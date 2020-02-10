@@ -1,32 +1,17 @@
 import React from 'react'
 import FieldWithError from './FieldWithError'
-import MaskedInput from 'react-text-mask'
+import InputMask from 'react-input-mask'
 
-import Input from '@material-ui/core/Input'
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
+import TextField from '@material-ui/core/TextField'
 
-const TextMaskCustom = ({ inputRef, ...other }) => (
-    <MaskedInput
-        {...other}
-        ref={ref => {
-            inputRef(ref ? ref.inputElement : null)
-        }}
-        mask={['+', '7', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-        placeholderChar={'\u2000'}
-    />
-)
-
-export default ({ style, name, hint, error, label, ...props }) => (
+export default ({ style, name, error, ...props }) => (
     <FieldWithError
         style={style}
-        hint={hint}
         name={name}
         render={({ field }) => (
-            <FormControl {...props}>
-                <InputLabel htmlFor={name}>{label}</InputLabel>
-                <Input {...field} id={name} inputComponent={TextMaskCustom} error={!field || !!field.error} />
-            </FormControl>
+            <InputMask {...field} mask="+7 (999) 999 99 99" maskChar=" ">
+                {() => <TextField {...props} type="text" error={!field || !!field.error}></TextField>}
+            </InputMask>
         )}
     />
 )
