@@ -1,5 +1,4 @@
 import { v1 as uuid } from 'uuid'
-import initEmployeesList from '../data/employees.json'
 
 const NS = '@app/employees'
 
@@ -16,13 +15,15 @@ export const actionTypes = {
 }
 
 export const getEmployees = () => dispatch => {
-    const nodes = initEmployeesList.map(item => {
-        const date = item.birthday.split('.')
-        const unixDate = Date.parse(`${date[1]}.${date[0]}.${date[2]}`)
-        return { ...item, birthday: unixDate }
-    })
+    import('../data/employees.json').then(module => {
+        const nodes = module.default.map(item => {
+            const date = item.birthday.split('.')
+            const unixDate = Date.parse(`${date[1]}.${date[0]}.${date[2]}`)
+            return { ...item, birthday: unixDate }
+        })
 
-    dispatch({ type: actionTypes.GET_EMPLOYEES, payload: { nodes } })
+        dispatch({ type: actionTypes.GET_EMPLOYEES, payload: { nodes } })
+    })
 }
 
 export const addEmployee = ({ name, isArchive, role, phone, birthday }) => dispatch => {
